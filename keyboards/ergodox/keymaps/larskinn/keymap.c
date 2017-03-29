@@ -33,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------+------+------+------+------+------| Hyper|          |  Del |------+------+------+------+------+---------|
  * |         |   Z  |   X  |   C  |   V  |   B  |      |          |      |  N   |  M   |  ,   |  .   |  /   |         |
  * `---------+------+------+------+------+-------------'          `-------------+------+------+------+------+---------'
- *   |       |      |      |      | Ctrl |                                      |  Alt |      |      |      |      |
+ *   |       |      |      |      | Alt  |                                      | Ctrl |      |      |      |      |
  *   `-----------------------------------'                                      `----------------------------------'
  *                                       ,-------------.          ,-------------.
  *                                       |  Gui | Ctrl |          | Ctrl | Gui  |
@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_GRV,          KC_Q,    KC_W,     KC_E,    KC_R,    KC_T,    KC_LBRC,
         LT(ARRW,KC_TAB), KC_A,    KC_S,     KC_D,    KC_F,    KC_G,
         xxxxxxx,         KC_Z,    KC_X,     KC_C,    KC_V,    KC_B,    KC_HYPR,
-        xxxxxxx,         xxxxxxx, xxxxxxx,  xxxxxxx, OS_LCTL,
+        xxxxxxx,         xxxxxxx, xxxxxxx,  xxxxxxx, OS_LALT,
                                                               KC_LGUI, KC_LCTRL,
                                                                        TG(GAME),
                                                      KC_BSPC, OS_LSFT, KC_ESC,
@@ -60,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_RBRC,         KC_Y,    KC_U,     KC_I,    KC_O,    KC_P,      KC_BSLS,
                          KC_H,    KC_J,     KC_K,    KC_L,    KC_SCLN,   KC_QUOT,
         KC_DEL,          KC_N,    KC_M,     KC_COMM, KC_DOT,  KC_SLSH,   xxxxxxx,
-                                  OS_LALT,  xxxxxxx, xxxxxxx, xxxxxxx,   xxxxxxx,
+                                  OS_LCTL,  xxxxxxx, xxxxxxx, xxxxxxx,   xxxxxxx,
         KC_RCTRL, OS_LGUI,
         TG(SYMB),
         OS_RALT,  KC_ENT, KC_SPC
