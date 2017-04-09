@@ -6,19 +6,28 @@
 #define _______ KC_TRNS
 #define xxxxxxx KC_NO
 
+// One-shot keys
 #define OS_LCTL OSM(MOD_LCTL)
 #define OS_LSFT OSM(MOD_LSFT)
 #define OS_LALT OSM(MOD_LALT)
 #define OS_RALT OSM(MOD_RALT)
 #define OS_LGUI OSM(MOD_LGUI)
 
+// Home row modifiers
+// Left
+#define SYMB_F LT(SYMB,KC_F)
+#define ARRW_G LT(ARRW,KC_G)
+// Right
+#define MOUS_H LT(MOUS,KC_H)
+#define SYMB_J LT(SYMB,KC_J)
+
 enum {
   BASE = 0,
-  COLEMAK,
+  CLMK,
   GAME,
   SYMB,
   ARRW,
-  MDIA,
+  MOUS,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -29,7 +38,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------+------+------+------+------+-------------|          |------+------+------+------+------+------+---------|
  * |    `~   |   Q  |   W  |   E  |   R  |   T  |  [   |          |   ]  |  Y   |  U   |  I   |  O   |  P   |    \    |
  * |---------+------+------+------+------+------|      |          |      |------+------+------+------+------+---------|
- * | Tab/Arw |   A  |   S  |   D  |   F  |   G  |------|          |------|  H   |  J   |  K   |  L   |  ;   |    '    |
+ * | Tab/Arw |   A  |   S  |   D  |F/Symb|G/Arrw|------|          |------|H/Mous|J/Symb|  K   |  L   |  ;   |    '    |
  * |---------+------+------+------+------+------| Hyper|          |  Del |------+------+------+------+------+---------|
  * |         |   Z  |   X  |   C  |   V  |   B  |      |          |      |  N   |  M   |  ,   |  .   |  /   |         |
  * `---------+------+------+------+------+-------------'          `-------------+------+------+------+------+---------'
@@ -49,16 +58,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // left hand
         xxxxxxx,         KC_1,    KC_2,     KC_3,    KC_4,    KC_5,    KC_EQL,
         KC_GRV,          KC_Q,    KC_W,     KC_E,    KC_R,    KC_T,    KC_LBRC,
-        LT(ARRW,KC_TAB), KC_A,    KC_S,     KC_D,    KC_F,    KC_G,
+        LT(ARRW,KC_TAB), KC_A,    KC_S,     KC_D,    SYMB_F,  ARRW_G,
         xxxxxxx,         KC_Z,    KC_X,     KC_C,    KC_V,    KC_B,    KC_HYPR,
         xxxxxxx,         xxxxxxx, xxxxxxx,  xxxxxxx, OS_LALT,
                                                               KC_LGUI, KC_LCTRL,
                                                                        TG(GAME),
                                                      KC_BSPC, OS_LSFT, KC_ESC,
         // right hand
-        KC_MINS,         KC_6,    KC_7,     KC_8,    KC_9,    KC_0,      TG(COLEMAK),
+        KC_MINS,         KC_6,    KC_7,     KC_8,    KC_9,    KC_0,      TG(CLMK),
         KC_RBRC,         KC_Y,    KC_U,     KC_I,    KC_O,    KC_P,      KC_BSLS,
-                         KC_H,    KC_J,     KC_K,    KC_L,    KC_SCLN,   KC_QUOT,
+                         MOUS_H,  SYMB_J,   KC_K,    KC_L,    KC_SCLN,   KC_QUOT,
         KC_DEL,          KC_N,    KC_M,     KC_COMM, KC_DOT,  KC_SLSH,   xxxxxxx,
                                   OS_LCTL,  xxxxxxx, xxxxxxx, xxxxxxx,   xxxxxxx,
         KC_RCTRL, OS_LGUI,
@@ -86,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                |      |      |      |          |      |      |      |
  *                                `--------------------'          `--------------------'
  */
-[COLEMAK] = KEYMAP(
+[CLMK] = KEYMAP(
         // left hand
         _______, _______, _______, _______, _______, _______, _______,
         _______, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    _______,
@@ -117,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------+------+------+------+------+------| Hyper|          |  Del |------+------+------+------+------+---------|
  * | LShift  |   Z  |   X  |   C  |   V  |   B  |      |          |      |  N   |  M   |  ,   |  .   |  /   |  RShift |
  * `---------+------+------+------+------+-------------'          `-------------+------+------+------+------+---------'
- *   |  Ctrl | SYMB | MDIA | Gui  | Alt  |                                      |AltGr | LEFT | DOWN |  UP  | RGHT |
+ *   |  Ctrl | SYMB | ARRW | Gui  | Alt  |                                      |AltGr | LEFT | DOWN |  UP  | RGHT |
  *   `-----------------------------------'                                      `----------------------------------'
  *                                       ,-------------.          ,-------------.
  *                                       |  Gui | Ctrl |          | Ctrl | Gui  |
@@ -133,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         OSL(SYMB),       KC_Q,    KC_W,     KC_E,    KC_R,    KC_T,    KC_ESC,
         KC_TAB,          KC_A,    KC_S,     KC_D,    KC_F,    KC_G,
         KC_LSFT,         KC_Z,    KC_X,     KC_C,    KC_V,    KC_B,    KC_HYPR,
-        KC_LCTRL,        MO(SYMB),MO(MDIA), KC_LGUI, KC_LALT,
+        KC_LCTRL,        MO(SYMB),MO(ARRW), KC_LGUI, KC_LALT,
                                                               KC_LGUI, KC_LCTRL,
                                                                        KC_HOME,
                                                      KC_SPC,  KC_ENT,  KC_END,
@@ -190,18 +199,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______, _______, _______
 ),
 
-/* Keymap 3: Arrow layer
+/* Keymap 3: Arrow and Media layer
  *
  * ,-----------------------------------------------------.           ,-----------------------------------------------------.
  * |           |      |      |      |      |      |      |           |      |      |      |      |      |      |           |
  * |-----------+------+------+------+------+-------------|           |------+------+------+------+------+------+-----------|
  * |           |      |      |      |      |      |      |           |      |      | Home |  Up  |  End |      |           |
  * |-----------+------+------+------+------+------|      |           |      |------+------+------+------+------+-----------|
- * |           |      |      |      |      |      |------|           |------|      | Left | Down | Rght |      |           |
+ * |           |      |      |      |      |      |------|           |------|      | Left | Down | Rght |      | Play      |
  * |-----------+------+------+------+------+------|      |           |      |------+------+------+------+------+-----------|
- * |           |      |      |      |      |      |      |           |      |      |      |      |      |      |           |
+ * |           |      |      |      |      |      |      |           |      |      |      | Prev | Next |      |           |
  * `-----------+------+------+------+------+-------------'           `-------------+------+------+------+------+-----------'
- *      |      |      |      |      |      |                                       |      |      |      |      |      |
+ *      |      |      |      |      |      |                                       |VolUp |VolDn | Mute |      |      |
  *      `----------------------------------'                                       `----------------------------------'
  *                                         ,-------------.           ,-------------.
  *                                         |      |      |           |      |      |
@@ -227,9 +236,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                 // right hand
         _______, _______, _______, _______, _______, _______, _______,
         _______, _______, KC_HOME, KC_UP,   KC_END,  _______, _______,
-        _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______,
+                 _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, KC_MPLY,
+        _______, _______, _______, KC_MPRV, KC_MNXT, _______, _______,
+                          KC_VOLU, KC_VOLD, KC_MUTE, _______, _______,
 
         _______, _______,
         _______,
@@ -242,36 +251,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |        |      |      | MsUp |      |      |      |           |      |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |MsLeft|MsDown|MsRght|      |------|           |------|      |      |      |      |      |  Play  |
+ * |        |      |MsLeft|MsDown|MsRght|      |------|           |------|      |      |      |      |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |      | Prev | Next |      |        |
+ * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      | Lclk | Rclk |                                       |VolUp |VolDn | Mute |      |      |
+ *   |      |      |      |      |      |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      |      |
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      |      |       |      |      |Brwser|
- *                                 |      |      |------|       |------|      |Back  |
+ *                                 | Lclk | Rclk |------|       |------|      |Back  |
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
-// MEDIA AND MOUSE
-[MDIA] = KEYMAP(
+// MOUSE
+[MOUS] = KEYMAP(
        _______, _______, _______, _______, _______, _______, _______,
        _______, _______, _______, KC_MS_U, _______, _______, _______,
        _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,
        _______, _______, _______, _______, _______, _______, _______,
-       _______, _______, _______, KC_BTN1, KC_BTN2,
+       _______, _______, _______, _______, _______,
                                                     _______, _______,
                                                              _______,
-                                           _______, _______, _______,
+                                           KC_BTN1, KC_BTN2, _______,
     // right hand
-       _______,  _______, _______, _______, _______, _______, _______,
-       _______,  _______, _______, _______, _______, _______, _______,
-                 _______, _______, _______, _______, _______, KC_MPLY,
-       _______,  _______, _______, KC_MPRV, KC_MNXT, _______, _______,
-                          KC_VOLU, KC_VOLD, KC_MUTE, _______, _______,
+       _______, _______, _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______, _______,
+                _______, _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______, _______,
+                         _______, _______, _______, _______, _______,
        _______, _______,
        _______,
        _______, _______, KC_WBAK
@@ -312,17 +321,17 @@ void matrix_scan_user(void) {
     ergodox_right_led_3_off();
     switch (layer) {
       // TODO: Make this relevant to the ErgoDox EZ.
-    case 1:
+    case CLMK:
       ergodox_right_led_3_on();
       break;
-    case 2:
+    case GAME:
       ergodox_right_led_2_on();
       break;
-    case 3:
+    case SYMB:
       ergodox_right_led_3_on();
       ergodox_right_led_2_on();
       break;
-    case 4:
+    case ARRW:
       ergodox_right_led_3_on();
       ergodox_right_led_2_on();
       ergodox_right_led_1_on();
