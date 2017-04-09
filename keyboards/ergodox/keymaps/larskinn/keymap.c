@@ -15,16 +15,18 @@
 
 // Home row modifiers
 // Left
-#define SYMB_F LT(SYMB,KC_F)
+#define SYMB_F LT(SYMBRIGHT,KC_F)
 #define ARRW_G LT(ARRW,KC_G)
 // Right
 #define MOUS_H LT(MOUS,KC_H)
-#define SYMB_J LT(SYMB,KC_J)
+#define SYMB_J LT(SYMBLEFT,KC_J)
 
 enum {
   BASE = 0,
   CLMK,
   GAME,
+  SYMBLEFT,
+  SYMBRIGHT,
   SYMB,
   ARRW,
   MOUS,
@@ -178,6 +180,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `--------------------'
  */
 // SYMBOLS
+[SYMBLEFT] = KEYMAP(
+       // left hand
+       _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,
+       _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE, _______,
+       _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,
+       _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______,
+       _______, _______, _______, _______, _______,
+                                                    _______, _______,
+                                                             _______,
+                                           _______, _______, _______,
+       // right hand
+       _______, _______, _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______, _______,
+                _______, _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______, _______,
+                         _______, _______, _______, _______, _______,
+       _______, _______,
+       _______,
+       _______, _______, _______
+
+),
+[SYMBRIGHT] = KEYMAP(
+       // left hand
+       _______, _______, _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______,
+                                                    _______, _______,
+                                                             _______,
+                                           _______, _______, _______,
+       // right hand
+       _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+       _______, KC_UP,   KC_7,    KC_8,    KC_9,    KC_ASTR, KC_F12,
+                KC_DOWN, KC_4,    KC_5,    KC_6,    KC_PLUS, _______,
+       _______, KC_AMPR, KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
+                         _______, KC_DOT,  KC_0,    KC_EQL,  _______,
+       _______, _______,
+       _______,
+       _______, _______, _______
+),
 [SYMB] = KEYMAP(
        // left hand
        _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,
@@ -322,19 +365,40 @@ void matrix_scan_user(void) {
     switch (layer) {
       // TODO: Make this relevant to the ErgoDox EZ.
     case CLMK:
+      ergodox_right_led_1_set(1);
+      ergodox_right_led_2_set(1);
+      ergodox_right_led_3_set(1);
+      ergodox_right_led_1_on();
+      ergodox_right_led_2_on();
       ergodox_right_led_3_on();
       break;
     case GAME:
+      ergodox_right_led_1_set(15);
+      ergodox_right_led_2_set(15);
+      ergodox_right_led_3_set(15);
+      ergodox_right_led_1_on();
       ergodox_right_led_2_on();
-      break;
-    case SYMB:
       ergodox_right_led_3_on();
+      break;
+    case SYMBLEFT:
+    case SYMBRIGHT:
+    case SYMB:
+      ergodox_right_led_1_set(50);
+      ergodox_right_led_2_set(50);
+      ergodox_right_led_1_on();
       ergodox_right_led_2_on();
       break;
     case ARRW:
-      ergodox_right_led_3_on();
+      ergodox_right_led_2_set(50);
+      ergodox_right_led_3_set(50);
       ergodox_right_led_2_on();
+      ergodox_right_led_3_on();
+      break;
+    case MOUS:
+      ergodox_right_led_1_set(50);
+      ergodox_right_led_3_set(50);
       ergodox_right_led_1_on();
+      ergodox_right_led_3_on();
       break;
     default:
       // none
